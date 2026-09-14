@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Emma's XV — Find Your Table</title>
+<style>
+:root{--ink:#203b57;--slate:#748ba0;--light:#edf3f7;--gold:#b28d55;--line:#d8e2ea;}
+*{box-sizing:border-box} body{margin:0;font-family:Georgia,"Times New Roman",serif;color:var(--ink);min-height:100vh;
+background:linear-gradient(180deg,#e8f0f6 0%,#c7d5e2 100%);}
+.wrap{max-width:850px;margin:auto;padding:14px}
+.card{background:rgba(255,255,255,.96);border:1px solid rgba(178,141,85,.65);border-radius:28px;
+box-shadow:0 18px 50px rgba(30,55,80,.18);overflow:hidden}
+.hero{padding:32px 20px 18px;text-align:center;background:
+radial-gradient(circle at 0 0,rgba(116,139,160,.25),transparent 28%),
+radial-gradient(circle at 100% 0,rgba(116,139,160,.25),transparent 28%),
+linear-gradient(#fdfcf8,#f6f8fa);}
+.crown{font-size:30px;color:var(--gold)} .emma{font-family:"Brush Script MT","Segoe Script",cursive;font-size:58px;line-height:.95}
+.xv{font-size:42px;letter-spacing:.16em;margin-left:.16em} .date{font-size:13px;letter-spacing:.23em;margin:8px 0 18px}
+.hero h1{font-size:31px;letter-spacing:.08em;margin:16px 0 6px;font-weight:500} .sub{font-style:italic;font-size:17px}
+.note{font-size:13px;color:#66798a;max-width:620px;margin:10px auto 18px;line-height:1.4}
+.searchbox{position:relative;max-width:640px;margin:0 auto}
+.searchbox span{position:absolute;left:18px;top:13px;font-size:22px}
+input{width:100%;padding:15px 18px 15px 48px;border-radius:999px;border:1.5px solid #aec0cf;font-size:17px;outline:none}
+input:focus{border-color:var(--slate);box-shadow:0 0 0 4px rgba(116,139,160,.13)}
+.letters{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:14px auto 0;max-width:700px}
+.letters button{width:35px;height:35px;border:1px solid #c4d0da;background:#fff;border-radius:8px;color:var(--ink);font-family:inherit}
+.letters button.active{background:#2e4d69;color:#fff;border-color:#2e4d69}
+.content{padding:16px 16px 8px} .stats{text-align:center;font-size:12px;color:#728392;margin-bottom:10px}
+.list{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:white}
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:13px 14px;border-top:1px solid #e9eef2;align-items:center}
+.row:first-child{border-top:0} .row:nth-child(even){background:#f7f9fb}
+.name{font-size:16px} .table{font-size:16px;font-weight:bold;white-space:nowrap}
+.empty{display:none;text-align:center;color:#6c7b88;padding:30px 15px}
+.footer{text-align:center;padding:30px 20px 34px;background:linear-gradient(#fff,#f1f5f8)}
+.thanks{font-family:"Brush Script MT","Segoe Script",cursive;font-size:30px} .tiny{font-size:12px;letter-spacing:.18em;margin-top:10px}
+@media(max-width:520px){.wrap{padding:8px}.card{border-radius:18px}.hero{padding:24px 12px 16px}.emma{font-size:48px}.xv{font-size:34px}.hero h1{font-size:26px}.content{padding:12px 9px 6px}.row{padding:12px 10px}.name,.table{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+<section class="hero">
+<div class="crown">♕</div><div class="emma">Emma's</div><div class="xv">XV</div>
+<div class="date">SEPTEMBER 26, 2026</div>
+<h1>FIND YOUR TABLE</h1>
+<div class="sub">Search for your name below to see your table number.</div>
+<div class="note">The number in parentheses represents the number of seats reserved for your party.</div>
+<div class="searchbox"><span>⌕</span><input id="q" type="search" placeholder="Search by name…" autocomplete="off"></div>
+<div class="letters" id="letters"></div>
+</section>
+<section class="content">
+<div class="stats" id="stats"></div>
+<div class="list" id="list"></div>
+<div class="empty" id="empty">No match found. Please try another name or ask the host for help.</div>
+</section>
+<div class="footer"><div class="thanks">Thank you for being part of this special day!</div><div class="tiny">EMMA'S XV</div></div>
+</div></div>
+<script>
+const guests=[{"name": "Adriana Fortune", "count": "4", "table": "5"}, {"name": "Aggie Johnson", "count": "1", "table": "21"}, {"name": "Agustin Rolon", "count": "3", "table": "18"}, {"name": "Alejandra", "count": "2", "table": "9"}, {"name": "Alex & Aaron Hernandez", "count": "2", "table": "5"}, {"name": "Alysha Vega", "count": "2", "table": "2"}, {"name": "Amaranta Esquivel", "count": "3", "table": "29"}, {"name": "Ana Martinez", "count": "7", "table": "20"}, {"name": "Anahi Cruz", "count": "2", "table": "10"}, {"name": "Andrew Mauricio", "count": "6", "table": "8"}, {"name": "Angelina Roytman", "count": "1", "table": "22"}, {"name": "Angie (Marisela family)", "count": "1", "table": "21"}, {"name": "Angie Eurosa - adults", "count": "3", "table": "29"}, {"name": "Anier & Eveling Bazan", "count": "2", "table": "6"}, {"name": "Anna Rolon", "count": "6", "table": "17"}, {"name": "Aria Dumse", "count": "1", "table": "22"}, {"name": "Ava Nguyen", "count": "1", "table": "21"}, {"name": "Ava Nguyen - adults", "count": "2", "table": "30"}, {"name": "Aylin Moran", "count": "5", "table": "18"}, {"name": "Bella Eurosa", "count": "1", "table": "21"}, {"name": "Bonny", "count": "3", "table": "20"}, {"name": "Celia Ramos", "count": "4", "table": "27"}, {"name": "Claudia Garcia", "count": "4", "table": "5"}, {"name": "Coach Leo / Leonel Rodriguez", "count": "5", "table": "24"}, {"name": "Cristel Vasquez", "count": "1", "table": "21"}, {"name": "Cynthia Maravilla Jimenez", "count": "4", "table": "11"}, {"name": "Denia Sanabria-Ruiz", "count": "4", "table": "10"}, {"name": "Donna (Jose Quivaja family)", "count": "1", "table": "22"}, {"name": "Edith Garcia", "count": "4", "table": "17"}, {"name": "Edwin Hernandez Family", "count": "4", "table": "1"}, {"name": "Elaine Gernade - adults", "count": "2", "table": "25"}, {"name": "Ella Gernade", "count": "1", "table": "21"}, {"name": "Emma (Irma family)", "count": "1", "table": "21"}, {"name": "Evelyn / Chiva Lainez", "count": "10", "table": "7"}, {"name": "Ezra Balugo", "count": "1", "table": "21"}, {"name": "Fernando's Friends - Group A", "count": "10", "table": "31"}, {"name": "Fernando's Friends - Group B", "count": "10", "table": "32"}, {"name": "Freddy & Angelica", "count": "2", "table": "11"}, {"name": "Giovanny Toral", "count": "1", "table": "8"}, {"name": "Hazel Diaz - adult", "count": "1", "table": "25"}, {"name": "Irma Perez - adults", "count": "4", "table": "29"}, {"name": "Jazmin Gonzalez", "count": "3", "table": "23"}, {"name": "Jenny Ceja", "count": "4", "table": "11"}, {"name": "Jeydi Ermac", "count": "2", "table": "23"}, {"name": "Jimena Torres", "count": "2", "table": "28"}, {"name": "Jissela Bustamante", "count": "2 + baby", "table": "6"}, {"name": "Jojo Balugo - adults", "count": "2", "table": "25"}, {"name": "Jojo family - volleyball girl #2", "count": "1", "table": "22"}, {"name": "Jose Quivaja - adults", "count": "4", "table": "25"}, {"name": "Jose Quivaja family - volleyball girl #2", "count": "1", "table": "22"}, {"name": "Juan Constanza", "count": "3", "table": "3"}, {"name": "Juan Jimenez", "count": "5", "table": "12"}, {"name": "Juana Román", "count": "2", "table": "2"}, {"name": "Julian Johnson - parents", "count": "2", "table": "24"}, {"name": "Katelyn Gernade", "count": "1", "table": "21"}, {"name": "Ke-Andre Walker", "count": "1", "table": "15"}, {"name": "Kevin Paredes", "count": "4", "table": "4"}, {"name": "Levi Brown", "count": "1", "table": "14"}, {"name": "Lorena Reyes", "count": "2", "table": "28"}, {"name": "Lucia Dumse - adult", "count": "1", "table": "25"}, {"name": "Lucia family - volleyball girl #2", "count": "1", "table": "22"}, {"name": "Lupita Cruz", "count": "3", "table": "8"}, {"name": "Maily Grimaldo", "count": "5", "table": "23"}, {"name": "Manuel & Carol Bran", "count": "4", "table": "4"}, {"name": "Maria & Fernando Muñoz", "count": "3", "table": "9"}, {"name": "Maria Elena Vazquez", "count": "2", "table": "3"}, {"name": "Maria Huinac", "count": "4", "table": "19"}, {"name": "Maria Ramos", "count": "4", "table": "27"}, {"name": "Marisela Lopez - adults", "count": "2", "table": "27"}, {"name": "Marvin Vasquez - family/adults", "count": "4", "table": "30"}, {"name": "Marymeli Sobalvarro", "count": "3", "table": "6"}, {"name": "María F Rivera", "count": "5", "table": "19"}, {"name": "Montalvo Family", "count": "5", "table": "13"}, {"name": "Nancy Garcia", "count": "4", "table": "30"}, {"name": "Nasrin Licha", "count": "2", "table": "26"}, {"name": "Natali Jimenez", "count": "4", "table": "16"}, {"name": "Nico family - volleyball girl #1", "count": "1", "table": "22"}, {"name": "Nico family - volleyball girl #2", "count": "1", "table": "22"}, {"name": "Parents & Grandparents", "count": "5", "table": "1"}, {"name": "Patricia Jimenez Avila", "count": "5", "table": "12"}, {"name": "Paul Martinez", "count": "5", "table": "13"}, {"name": "Priscilla Becerra", "count": "7", "table": "14"}, {"name": "Ray Nico Caldoza - parents", "count": "2", "table": "24"}, {"name": "Rocio y Familia Roblero Hernández", "count": "8", "table": "26"}, {"name": "Rodolfo Magaña", "count": "4", "table": "15"}, {"name": "Rosa Jimenez", "count": "5", "table": "15"}, {"name": "Rosalva Partida", "count": "6", "table": "16"}, {"name": "Saul Vega", "count": "4", "table": "2"}, {"name": "Scarlett Diaz", "count": "1", "table": "22"}, {"name": "Sergio Marroquin (Neighbor)", "count": "2", "table": "6"}, {"name": "Shinji Vergara", "count": "1", "table": "19"}, {"name": "Siboney Gomez", "count": "3", "table": "28"}, {"name": "Sofi Herrera", "count": "1", "table": "21"}, {"name": "Sophia Herrera - parent", "count": "1", "table": "24"}, {"name": "Stephanie Reyes", "count": "2", "table": "28"}, {"name": "Steve Costley", "count": "2", "table": "2"}, {"name": "Tatiana Castro", "count": "2", "table": "10"}, {"name": "Tia Tona", "count": "2", "table": "18"}, {"name": "Tio Pelon / Maria y Maximino Serratos", "count": "2", "table": "4"}, {"name": "Tio Sergio Marroquín", "count": "5", "table": "3"}, {"name": "Toto / Luz Cabral", "count": "5", "table": "9"}, {"name": "Wendy Camarillo", "count": "2", "table": "10"}, {"name": "Yoya / Gloria Rolon", "count": "2", "table": "14"}];
+const q=document.getElementById('q'), list=document.getElementById('list'), empty=document.getElementById('empty'), stats=document.getElementById('stats'), letters=document.getElementById('letters');
+let letter='ALL';
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[m])}
+function render(){
+ const term=q.value.trim().toLowerCase();
+ const rows=guests.filter(g=>(!term||g.name.toLowerCase().includes(term))&&(letter==='ALL'||g.name.trim().toUpperCase().startsWith(letter)));
+ list.innerHTML=rows.map(g=>`<div class="row"><div class="name">${esc(g.name)} <strong>(${esc(g.count)})</strong></div><div class="table">Table ${esc(g.table)}</div></div>`).join('');
+ list.style.display=rows.length?'block':'none'; empty.style.display=rows.length?'none':'block';
+ stats.textContent=rows.length===guests.length?`${guests.length} parties listed`:`${rows.length} match${rows.length===1?'':'es'}`;
+}
+['ALL',...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].forEach(l=>{let b=document.createElement('button');b.textContent=l==='ALL'?'All':l;b.dataset.l=l;b.onclick=()=>{letter=l;[...letters.children].forEach(x=>x.classList.toggle('active',x.dataset.l===l));render()};letters.appendChild(b)});
+q.addEventListener('input',()=>{letter='ALL';[...letters.children].forEach(x=>x.classList.toggle('active',x.dataset.l==='ALL'));render()});
+letters.firstChild.classList.add('active');render();
+</script>
+</body></html>
